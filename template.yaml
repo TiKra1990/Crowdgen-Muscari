@@ -5,12 +5,11 @@ Parameters:
   SshKey:
     Description: "Name des SSH-Schlüsselpaars für den Zugriff auf die EC2-Instanz"
     Type: String
-    Default: "2open-cloudgen-muscari"
+    Default: "my-key-pair" # Ersetze dies durch deinen tatsächlichen SSH-Schlüssel-Namen
 
   SubnetId:
     Description: "Subnetz-ID für die EC2-Instanz"
     Type: AWS::EC2::Subnet::Id
-    Default: "subnet-0d066b413f689e722"
 
 Resources:
   MyEC2Instance:
@@ -19,26 +18,11 @@ Resources:
       InstanceType: t2.micro
       KeyName: !Ref SshKey
       SubnetId: !Ref SubnetId
-      ImageId: ami-000bbdf2a61275fea
-      SecurityGroupIds:
-        - !Ref InstanceSecurityGroup
-
-  InstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: "Erlaubt SSH-Zugriff"
-      VpcId: vpc-0c00ab1038adf2067
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
+      ImageId: ami-0c02fb55956c7d316 # Amazon Linux 2 (x86_64) - Region eu-central-1
 
 Outputs:
   InstanceId:
     Description: "Die ID der EC2-Instanz"
     Value: !Ref MyEC2Instance
-  PublicIP:
-    Description: "Öffentliche IP-Adresse der EC2-Instanz"
-    Value: !GetAtt MyEC2Instance.PublicIp
+
 
