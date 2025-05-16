@@ -1,0 +1,28 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Erstellt eine EC2-Instanz mit SSH-Zugriff"
+
+Parameters:
+  SshKey:
+    Description: "Name des SSH-Schlüsselpaars für den Zugriff auf die EC2-Instanz"
+    Type: String
+    Default: "2open-cloudgen-muscari"
+
+  SubnetId:
+    Description: "Subnetz-ID für die EC2-Instanz"
+    Type: AWS::EC2::Subnet::Id
+    Default: "subnet-0d066b413f689e722"
+
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref SshKey
+      SubnetId: !Ref SubnetId
+      ImageId: ami-000bbdf2a61275fea
+
+Outputs:
+  InstanceId:
+    Description: "Die ID der EC2-Instanz"
+    Value: !Ref MyEC2Instance
